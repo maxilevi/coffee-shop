@@ -1,0 +1,18 @@
+.price {
+	color: green;
+}
+
+.desc {
+	font-size: .8em;
+}
+
+.subtext {
+	margin-bottom:0.25rem;
+	font-size: .8em;
+}
+
+.brand {
+	font-size: .7em;
+	top: 4%;
+	right: 4%;
+}

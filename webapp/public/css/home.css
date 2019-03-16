@@ -1,0 +1,9 @@
+
+.background {
+	background: #eee;
+}
+
+.cover-img {
+	background-image: url('/img/beans.jpg');
+	background-position: bottom;
+}

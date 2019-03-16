@@ -1,0 +1,53 @@
+.background {
+	background: #eee;
+}
+
+.style-select {
+	margin-bottom: 30px;
+}
+
+.quantity {
+	margin-bottom: 30px;
+}
+
+.slideshow {
+	max-width:40%;
+	border: 5px;
+	border-color: #eee;
+}
+
+.container {
+	padding: 50px 50px 50px 0px;
+	border: 5px;
+	border-color: #eee;
+	background: #fff;
+}
+
+.form-container {
+	margin-left: 0px;
+}
+
+.cover-img {
+	background-image: url('/img/beans.jpg');
+	background-position: bottom;
+}
+
+.label {
+	margin-right: 20px;
+	vertical-align: middle;
+	font-weight: 600;
+}
+
+.input {
+	max-width: 300px;
+}
+
+.similar-products{
+	margin-top: 100px;
+}
+
+.slide-brand {
+	font-size: .8em;
+	margin-left: 20px;
+	margin-bottom: 1em;
+}
