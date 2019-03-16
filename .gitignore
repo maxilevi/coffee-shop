@@ -1,0 +1,10 @@
+content/
+settings.json
+.idea
+content/
+scheduled.json
+__pycache__
+backend/RopaOnlineBackend/obj/**
+backend/RopaOnlineBackend/bin/**
+backend/.vs/**
+backend/RopaOnline Tests/obj/**
