@@ -14,4 +14,8 @@ class Product extends Model {
 		if ($limit !== null) $sql->take($limit);
 		return $sql;
 	}
+
+	public static function calculatePrice(int $price, float $modifier) {
+		return round(($price * $modifier) / 50) * 50 - 1;
+	}
 }

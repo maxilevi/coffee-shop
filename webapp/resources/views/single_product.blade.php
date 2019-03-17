@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.5/css/components/slider.min.css"/>
 @endsection
 @include('layouts.header')
-<section class="uk-section background">
+<section class="uk-section  cover-img">
 	<div class="uk-container uk-box-shadow-small container">
 			<div uk-grid class="uk-child-width-expand">
 				<div class="slideshow">
@@ -28,7 +28,7 @@
 					<h1 class="uk-text-emphasis uk-text-uppercase uk-text-bold">{{ $product->name }}</h1>
 					<div class="uk-label slide-brand">{{ $product->brand }}</div>
 					</div>
-					<h1 class="uk-text-emphasis uk-text-uppercase" style="margin-top:0px;">${{ $product->price }}</h1>
+					<h1 class="uk-text-uppercase product-price" style="margin-top:0px;" id="price"></h1>
 					<p class="uk-text-meta">{{ $product->description }}</p>
 					<hr>
 					<form>
@@ -43,17 +43,13 @@
 				        @endphp
 					    </select>
 					    <br>
-					    <span class="label uk-text-uppercase uk-text-emphasis" >Peso</span>
+					    <span class="label uk-text-uppercase uk-text-emphasis" >CANTIDAD</span>
 					    <br>
-					    <select class="uk-select style-select input" id="weight">
-					    	<option>1/4 Kilo</option>
-					    	<option>1/2 Kilo</option>
-					    	<option>1 Kilo</option>
+					    <select class="uk-select style-select input" id="weight" onchange="update_price()">
+					    	<option value="0">1/4 Kilo</option>
+					    	<option value="1">1/2 Kilo</option>
+					    	<option value="2">1 Kilo</option>
 					    </select>
-					    <br>
-				    	<span class="label uk-text-uppercase uk-text-emphasis">Cantidad</span>
-				    	<br>
-				    	<input class="uk-input quantity input" type="number" id="amount" value="1"></input>
 					    <br>
 					    <button class="uk-button uk-button-primary buy-btn ">Comprar ahora</button>
 					    <button class="uk-button uk-button-default buy-btn">Agregrar al carrito</button>
@@ -69,4 +65,13 @@
 		</div>
 	</div>
 </section>
+@section('scripts')
+<script type="text/javascript">
+	var prices = {{ json_encode($prices) }};
+	function update_price() {
+		document.getElementById('price').innerText = '$' + (prices[document.getElementById('weight').value]);
+	}
+	update_price();
+</script>
+@endsection
 @include('layouts.footer')

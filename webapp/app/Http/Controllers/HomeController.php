@@ -22,7 +22,7 @@ class HomeController extends Controller
 
     private function modifyPrice(&$products) {
     	foreach ($products as &$product) {
-    		$product->price = round(($product->price * .25) / 50) * 50 - 1;
+    		$product->price = Product::calculatePrice($product->price, .25);
     	}
     }
 
