@@ -39,6 +39,6 @@ class ImageFormatter():
             offset = (height - new_height) / 2
             resize = (0, offset, width, height - offset)
 
-        #thumb = image.crop(resize).resize((ideal_width, ideal_height), Image.ANTIALIAS)
+        thumb = image#.crop(resize).resize((ideal_width, ideal_height), Image.ANTIALIAS)
         thumb.save(tmp_path, quality=95)
         return name

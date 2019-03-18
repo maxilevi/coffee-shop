@@ -7,3 +7,7 @@
 	background-image: url('/img/beans.jpg');
 	background-position: bottom;
 }
+
+a:hover {
+	text-decoration: none;
+}

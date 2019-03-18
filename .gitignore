@@ -4,7 +4,5 @@ settings.json
 content/
 scheduled.json
 __pycache__
-backend/RopaOnlineBackend/obj/**
-backend/RopaOnlineBackend/bin/**
-backend/.vs/**
-backend/RopaOnline Tests/obj/**
+webapp/public/temp/*
+/webapp/public/temp
