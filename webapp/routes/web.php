@@ -13,5 +13,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/product/{id}', 'SingleProductController@index')->name('product');
+Route::get('/', 'HomeController@index');
+Route::get('/cart/', 'CartController@index');
+Route::get('/checkout/', 'CheckoutController@index');
+Route::get('/product/{id}', 'SingleProductController@index');

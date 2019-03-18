@@ -23,7 +23,8 @@ class DB():
         for entry in entries:
             images = json.dumps(entry['images'])
             cuts = json.dumps(entry['cuts'])
-            query = f"INSERT INTO Products (name, description, thumbnail, price, brand, images, cuts) VALUES ('{entry['name']}', '{entry['description']}', '{entry['thumbnail']}', {entry['price']}, '{entry['brand']}', '{images}', '{cuts}');"
+            short_desc = self.get_short_desc(entry['description'])
+            query = f"INSERT INTO Products (name, short_description, long_description, thumbnail, price, brand, images, cuts) VALUES ('{entry['name']}', '{short_desc}', '{entry['description']}', '{entry['thumbnail']}', {entry['price']}, '{entry['brand']}', '{images}', '{cuts}');"
             self.execute_query(query)
 
     def truncate(self):
@@ -39,6 +40,17 @@ class DB():
     def assert_config(self):
         if 'db_host' not in self.config or 'db_host' not in self.config or 'db_port' not in self.config or 'db_database' not in self.config or 'db_username' not in self.config or 'db_password' not in self.config:
             raise ValueError('Invalid config')
+
+    def get_short_desc(self, text):
+        lines = text.split('.')
+        counted = 0
+        new_text = ''
+        i = 0
+        while counted < 100 and i < len(lines):
+            new_text += lines[i]  + '.'
+            counted += len(lines[i])
+            i += 1
+        return new_text
 
     def close(self):
         self.connection.close()

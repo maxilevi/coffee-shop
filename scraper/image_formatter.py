@@ -23,8 +23,8 @@ class ImageFormatter():
 
         aspect = width / float(height)
 
-        ideal_width = 330
-        ideal_height = 225
+        ideal_width = 250
+        ideal_height = 170
 
         ideal_aspect = ideal_width / float(ideal_height)
 
@@ -39,6 +39,6 @@ class ImageFormatter():
             offset = (height - new_height) / 2
             resize = (0, offset, width, height - offset)
 
-        thumb = image.crop(resize).resize((ideal_width, ideal_height), Image.ANTIALIAS)
+        #thumb = image.crop(resize).resize((ideal_width, ideal_height), Image.ANTIALIAS)
         thumb.save(tmp_path, quality=95)
         return name

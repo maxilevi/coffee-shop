@@ -12,7 +12,7 @@
     </div>
     <div class="uk-card-body">
       <h4 class="uk-margin-remove-bottom">{{ $product->name }}</h4>
-      <p class="desc">{{ $product->description }}</p>
+      <p class="desc">{{ $product->short_description }}</p>
     </div>
     <div class="uk-card-footer">
       <span class="uk-align-left price subtext">${{ $product->price }}</span>

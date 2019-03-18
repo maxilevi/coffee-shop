@@ -17,12 +17,14 @@ class HomeController extends Controller
     {
     	$products = $this->getProducts($request);
     	$this->modifyPrice($products);
-        return view('home')->with('top_products', $products);
+        return view('home')->with([
+            'top_products' => $products
+        ]);
     }
 
     private function modifyPrice(&$products) {
     	foreach ($products as &$product) {
-    		$product->price = Product::calculatePrice($product->price, .25);
+    		$product->price = Product::calculatePrice($product->price);
     	}
     }
 
