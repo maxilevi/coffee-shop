@@ -59,7 +59,7 @@ Carro de compras
                                         <div class="uk-width-expand uk-text-muted">Total</div>
                                         <div id="total" class="uk-text-lead uk-text-bolder"></div>
                                     </div>
-                                    <a class="uk-button uk-button-primary uk-margin-small uk-width-1-1" href="/checkout/">Pagar</a>
+                                    <a class="uk-button uk-button-primary uk-margin-small uk-width-1-1" href="/checkout/">Comprar todo</a>
                                 </div>
                             </div>
                         </div>
@@ -71,22 +71,6 @@ Carro de compras
 </main>
 </div>
 @section('scripts')
-<script type="text/javascript">
-@php
-    echo 'var products = '. json_encode(array_values($products)) . ';';
-@endphp
-
-function refresh() {
-    var subtotal = 0.0;
-    var discount = 0.0;
-    for(var i = 0; i < products.length; ++i) {
-        subtotal += products[i].value;
-    }
-    document.getElementById('subtotal').innerText = '$' + subtotal;
-    document.getElementById('discount').innerText = '-$' + discount;
-    document.getElementById('total').innerText = '$' + (subtotal - discount);
-}
-refresh();
-</script>
+@include('cart_script', ['products' => $products])
 @endsection
 @include('layouts.footer')

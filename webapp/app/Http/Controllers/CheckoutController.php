@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index(Request $request)
     {
-        return view('checkout');
+    	return view('checkout')->with([
+    		'products' => CartController::getProducts()
+    	]);
+    }
+
+    private static function getExistingItems() {
+        return json_decode($_COOKIE[self::COOKIE_NAME], true) ?? [];
     }
 }

@@ -7810,11 +7810,6 @@ iframe.uk-cover {
     filter: none
 }
 
-.cover-img {
-	background-image: url('/img/beans.jpg');
-	background-position: bottom;
-}
- 
 .label {
    margin-right: 20px;
    vertical-align: middle;

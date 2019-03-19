@@ -12,17 +12,22 @@ class CartController extends Controller
 
     public function index(Request $request)
     {
-    	$productIds = $this->getExistingItems();
+    	return view('cart')->with([
+    		'products' => $this->getProducts()
+    	]);
+    }
+
+    public static function getProducts() {
+        $productIds = self::getExistingItems();
         $products = Product::getFromIds($productIds);
         foreach ($products as &$product) {
             $realPrice = $product->price;
             $amount = 1;
+            $product->amount = $amount;
             $product->price = Product::calculatePrice($realPrice);
             $product->value = Product::calculatePrice($realPrice) * $amount;
         }
-    	return view('cart')->with([
-    		'products' => $products
-    	]);
+        return $products;
     }
 
     public function handle(Request $request) {
@@ -40,24 +45,28 @@ class CartController extends Controller
 
     public function add(array $previous, int $id) {
         $new = array_merge($previous, [$id]);
-        return $this->updateCookie($new);
+        return self::updateCookie($new);
     }
 
     public function remove(array $previous, int $id) {
         $key = array_search($id, $previous);
         if ($key !== false) unset($previous[$key]);
-        return $this->updateCookie($previous);
+        return self::updateCookie($previous);
     }
 
     private static function getExistingItems() {
         return json_decode($_COOKIE[self::COOKIE_NAME], true) ?? [];
     }
 
-    private function updateCookie(array $new) {
+    private static function updateCookie(array $new) {
         return cookie(self::COOKIE_NAME, json_encode($new), self::COOKIE_DURATION);
     }
 
     public static function getItems() {
         return self::getExistingItems();
+    }
+
+    public static function empty() {
+        self::updateCookie([]);
     }
 }

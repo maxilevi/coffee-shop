@@ -55,5 +55,5 @@
 </header>
 <body>
 <div class="uk-height-large uk-background-cover uk-light uk-flex cover-img" uk-parallax="bgy: -50">
-    <h1 class="uk-width-1-2@b uk-text-center uk-margin-auto uk-margin-auto-vertical uk-text-uppercase banner-title">@yield('banner')</h1>
+    <h1 class="uk-width-1-2@b uk-text-center uk-margin-auto uk-margin-auto-vertical uk-text-uppercase banner-title uk-text-bold">@yield('banner')</h1>
 </div>

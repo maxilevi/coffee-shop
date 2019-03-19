@@ -3,6 +3,9 @@
 @endsection
 @include('layouts.header')
 
+@php
+$images = json_decode($product->images, true);
+@endphp
 <div class="background">
     <main>
         <section class="uk-section uk-section-small">
@@ -21,7 +24,6 @@
                                                 <div>
                                                     <ul class="uk-slideshow-items" uk-lightbox>
                                                     @php
-                                                        $images = json_decode($product->images, true);
                                                         foreach($images as $image) {
                                                             echo View::make('single_product_slide_image', ['image' => $image, 'product' => $product]);
                                                         }
@@ -36,7 +38,6 @@
                                                                     <div class="uk-slider-container">
                                                                         <ul class="tm-slider-items uk-slider-items uk-child-width-1-4 uk-grid uk-grid-small">
                                                                         @php
-                                                                            $images = json_decode($product->images, true);
                                                                             foreach($images as $image) {
                                                                                 echo View::make('single_product_small_slide_image', ['image' => $image, 'product' => $product]);
                                                                             }

@@ -18,3 +18,8 @@ html {
 .banner-title {
 	text-shadow: 1px 1px 4px black;
 }
+
+.cover-img {
+	background-image: url('/img/beans.jpg');
+	background-position: bottom;
+}
