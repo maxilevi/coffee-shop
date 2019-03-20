@@ -24,24 +24,25 @@ class PaymentController extends Controller
         $preference->items = $this->getItems($products);
         $preference->payer = $this->getPayer($request);
         $preference->shipments = $this->getShipment($request, $products);
-        $preference->payment_methods = [
-            "installments" => 1
-        ];
+        $preference->payment_methods = ["installments" => 1];
+        $email = $request->input('email');
+        $encoded_products = json_encode($products);
         $preference->back_urls = [
-            "success" => 'https://outletdecafe.com/api/success',
-            "failure" => 'https://outletdecafe.com/api/failure',
-            "pending" => 'https://outletdecafe.com/api/pending'
+            "success" => "https://outletdecafe.com/api/success?email={$email}&products={$encoded_products}",
+            "failure" => "https://outletdecafe.com/api/failure?email={$email}",
+            "pending" => "https://outletdecafe.com/api/pending?email={$email}"
         ];
         $preference->auto_return = "all";
-        $preference->external_reference = "";
-        $preference->notification_url = "https://outletdecafe.com/api/notifications";
+        $payment_code = Payment::create();
+        $preference->notification_url = "https://outletdecafe.com/api/notifications?code={$payment_code}";
         $preference->save();
-        if ($preference->sandbox_init_point === null)
+        $init_point = $preference->sandbox_init_point;
+        if ($init_point === null)
         {
-            print_r($preference->error);
+            //print_r($preference->error);
             return abort(500);
         }
-        return redirect($preference->sandbox_init_point);
+        return redirect($init_point);
     }
 
     private function getItems($products)
@@ -65,10 +66,11 @@ class PaymentController extends Controller
     {
         $shipments = new MercadoPago\Shipments();
         $shipments->mode = "me2";
-        $shipments->dimensions = "30x30x30," . (250 * count($products));
-        if (count($products) > 4) {
+        $shipments->dimensions = ShipmentController::getShipmentString($products);
+        /*if (count($products) > 5)
+        {
             $shipments->free_methods = [["id" => 73328]];
-        }
+        }*/
         return $shipments;
     }
 
@@ -88,12 +90,40 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
+        if (!Payment::exists($request->input('code')) return;
+        Payment::delete($request->input('code'));
+        $orderId = $request->input('merchant_order_id');
+        Sale::create($orderId, $request->input('email'), $request->input('products'));
+        self::sendEmail($request->input('email'), $request->input('merchant_order_id'));
         CartController::empty();
-        Sale::create($request->input('merchant_order_id'));
-        // actualizar la db
-        // mostrar cartel de successfull
-        // mandar mail
-        //collection_id=18264371&collection_status=approved&preference_id=418076404-8217c373-8d58-4028-921b-3dcbd1eefdce&external_reference=null&payment_type=credit_card&merchant_order_id=993600018
+        return redirect("/shipment/{$orderId}?success=true");
+    }
+
+    private static function sendEmail($to, $orderId)
+    {
+        $headers = 'From: soporte@outletdecafe.com' . "\r\n" .
+                   'Reply-To: soporte@outletdecafe.com' . "\r\n";
+<<<BODY
+Hola,
+¡Gracias por tu compra en OUTLET DE CAFÉ!
+
+El pagó fue confirmado y el pedido esta en camino.
+Podes consultar el estado de tu pedido a traves de este link:
+* https://outletdecafe.com/shipments/{$orderId}
+
+¡Muchas Gracias!
+BODY>>>;
+        mail($to, 'Tu compra en OUTLET DE CAFÉ', $body, $headers);
+    }
+
+    public function pending()
+    {
+        return view('pending');  
+    }
+
+    public function failure()
+    {
+        return view('failure');    
     }
 
     public function ipn(Request $request)

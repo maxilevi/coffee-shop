@@ -49,66 +49,6 @@ CHECKOUT
                                         </div>
                                     </section>
                                     <section>
-                                        <h2 class="tm-checkout-title uk-text-bold">ENVIO</h2>
-                                        <div class="uk-card uk-card-default uk-card-small uk-card-body tm-ignore-container">
-                                            <div class="uk-grid-small uk-grid-match uk-child-width-1-1 uk-child-width-1-3@s uk-flex-center" uk-switcher="toggle: &gt; * &gt; .tm-choose" uk-grid>
-                                                <div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-switcher uk-margin"> 
-                                                <section>
-                                                    <div class="uk-grid-small" uk-grid>
-                                                        <div class="uk-width-1-1">
-                                                            <label>
-                                                                <div class="uk-form-label uk-form-label-required">Calle</div>
-                                                                <input name="street" class="uk-input" type="text" placeholder="Av. Libertador" required>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="uk-grid-small" uk-grid>
-                                                        <div class="uk-width-1-4 uk-width-1-6@s">
-                                                            <label>
-                                                                <div class="uk-form-label uk-form-label-required">Altura</div>
-                                                                <input name="street_number" class="uk-input" type="number" placeholder="123" required>
-                                                            </label>
-                                                        </div>
-                                                        <div class="uk-width-1-4 uk-width-1-6@s">
-                                                            <label>
-                                                                <div class="uk-form-label-required">Piso</div>
-                                                                <input name="floor" class="uk-input" type="text" placeholder="2" required >
-                                                            </label>
-                                                        </div>
-                                                        <div class="uk-width-1-4 uk-width-1-6@s">
-                                                            <label>
-                                                                <div class="uk-form-label-required">Departamento</div>
-                                                                <input name="apartment" class="uk-input" type="text" placeholder="N/A" required>
-                                                            </label>
-                                                        </div>
-                                                        <div class="uk-width-1-4 uk-width-1-6@s">
-                                                            <label>
-                                                                <div class="uk-form-label-required">Código postal</div>
-                                                                <input name="zip_code" class="uk-input" type="number" placeholder="1425" required>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="uk-grid-small uk-child-width-1-3 uk-child-width-1-4@s" uk-grid>
-                                                        <div>
-                                                            <label>
-                                                                <div class="uk-form-label-required">País</div>
-                                                                <input name="country" class="uk-input" type="text" value="Argentina" disabled required>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div style="margin-top: 20px;">
-                                                        <div class="uk-width-1-1 uk-text-meta">Esta informacíon solo es usada para efectuar el envío y no es almacenada. <a href="/privacidad">Más informacion</a></div>
-                                                    </div>
-                                                </section>
-                                                <div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section>
                                         <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
                                             <div class="uk-card-body">
                                                 <div class="uk-flex-center">
