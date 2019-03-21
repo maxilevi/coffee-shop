@@ -23,6 +23,6 @@ class Sale extends Model {
 
 	public static function getByMerchantOrderId($orderId)
 	{
-		return self::where('order_id', '=', $orderId)->first();
+		return self::where('order_id', '=', $orderId)->get();
 	}
 }
