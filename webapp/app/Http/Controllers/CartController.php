@@ -20,6 +20,7 @@ class CartController extends Controller
     public static function getProducts() {
         $productIds = self::getExistingItems();
         $products = Product::getFromIds($productIds);
+        print_r($products);
         foreach ($products as &$product) {
             $realPrice = $product->price;
             $amount = 1;
