@@ -114,36 +114,34 @@ class PaymentController extends Controller
     public function ipn(Request $request)
     {
         Log::info('IPN RECEIVED');
-        if ($request->input('topic')) {
-            MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
-            $merchant_order = null;
+        MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
+        $merchant_order = null;
 
-            switch($request->input('topic'))
-            {
-                case "payment":
-                    $payment = MercadoPago\Payment::find_by_id($request->input("id"));
-                    // Get the payment and the corresponding merchant_order reported by the IPN.
-                    $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
-                case "merchant_order":
-                    $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
-            }
+        switch($request->input('topic'))
+        {
+            case "payment":
+                $payment = MercadoPago\Payment::find_by_id($request->input("id"));
+                // Get the payment and the corresponding merchant_order reported by the IPN.
+                $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
+            case "merchant_order":
+                $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
+        }
 
-            $paid_amount = 0;
-            foreach ($merchant_order->payments as $payment)
+        $paid_amount = 0;
+        foreach ($merchant_order->payments as $payment)
+        {
+            if ($payment["status"] == "approved")
             {
-                if ($payment["status"] == "approved")
-                {
-                    $paid_amount += $payment['transaction_amount'];
-                }
+                $paid_amount += $payment['transaction_amount'];
             }
+        }
 
-            if($paid_amount >= $merchant_order->total_amount)
-            {
-                $payment = Payment::getByCode($request->input('code'));
-                Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
-                self::sendEmail($payment->email, $request->input('merchant_order_id'));
-                $payment->delete();
-            }
+        if($paid_amount >= $merchant_order->total_amount)
+        {
+            $payment = Payment::getByCode($request->input('code'));
+            Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
+            self::sendEmail($payment->email, $request->input('merchant_order_id'));
+            $payment->delete();
         }
         return response('', 200);
     }

@@ -19,5 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/process_payment', 'PaymentController@handle');
 Route::post('/cart/edit', 'CartController@handle');
-Route::get('/notifications', 'PaymentController@ipn');
+Route::post('/notifications', 'PaymentController@ipn');
 
