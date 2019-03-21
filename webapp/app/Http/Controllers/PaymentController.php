@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use MercadoPago;
 use App\Payment;
+use Log;
 
 class PaymentController extends Controller
 {
@@ -112,6 +113,7 @@ class PaymentController extends Controller
 
     public function ipn(Request $request)
     {
+        Log::info('IPN RECEIVED');
         if ($request->input('topic')) {
             MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
             $merchant_order = null;
