@@ -24,11 +24,11 @@ class DB():
             images = json.dumps(entry['images'])
             cuts = json.dumps(entry['cuts'])
             short_desc = self.get_short_desc(entry['description'])
-            query = f"INSERT INTO Products (name, short_description, long_description, thumbnail, price, brand, images, cuts) VALUES ('{entry['name']}', '{short_desc}', '{entry['description']}', '{entry['thumbnail']}', {entry['price']}, '{entry['brand']}', '{images}', '{cuts}');"
+            query = f"INSERT INTO products (name, short_description, long_description, thumbnail, price, brand, images, cuts) VALUES ('{entry['name']}', '{short_desc}', '{entry['description']}', '{entry['thumbnail']}', {entry['price']}, '{entry['brand']}', '{images}', '{cuts}');"
             self.execute_query(query)
 
     def truncate(self):
-        self.execute_query('TRUNCATE TABLE Products;')
+        self.execute_query('TRUNCATE TABLE products;')
 
     def execute_query(self, query):
         with self.connection.cursor() as cursor:

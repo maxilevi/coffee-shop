@@ -1,3 +1,4 @@
 request
 BeautifulSoup4
 PyMySQL
+Pillow
