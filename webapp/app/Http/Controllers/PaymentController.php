@@ -108,7 +108,7 @@ class PaymentController extends Controller
 
     public function ipn(Request $request)
     {
-        Log::info('IPN RECEIVED');
+        Log::info("IPN RECEIVED topic='{$request->input('topic')}'");
         MercadoPago\SDK::setAccessToken(self::ACCESS_TOKEN);
         $merchant_order = null;
 
