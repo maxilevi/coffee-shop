@@ -122,7 +122,7 @@ class PaymentController extends Controller
             if($merchant_order->status == 'closed')
             {
                 $payment = Payment::getByCode($request->input('code'));
-                Sale::create($merchant_order->id, $payment->email, json_decode($payment->products, true));
+                Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
                 self::sendEmail($payment->email, $merchant_order->id);
                 $payment->delete();
                 Log::info("[IPN] Order '{$merchant_order->id}' with code '{$request->input('code')}' was paid");

@@ -9,7 +9,7 @@ class Sale extends Model {
 
 	protected $guarded = ['id'];
 
-	public static function create($orderId, $email, $products)
+	public static function build($orderId, $email, $products)
 	{
 		$sale = new Sale();
 		$sale->order_id = $order_id;
