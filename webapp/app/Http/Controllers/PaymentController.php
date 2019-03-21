@@ -116,7 +116,7 @@ class PaymentController extends Controller
         {
             case "payment":
                 $payment = MercadoPago\Payment::find_by_id($request->input("id"));
-                // Get the payment and the corresponding merchant_order reported by the IPN.
+                Log::info("id={$request->input("id")} order_id='{$payment->order_id}'");
                 $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
             case "merchant_order":
                 $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
