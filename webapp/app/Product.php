@@ -12,7 +12,7 @@ class Product extends Model {
 	public static function getTopProducts(int $limit = null) {
 		# SELECT * FROM products ORDER BY (SELECT COUNT(1) FROM sales WHERE sales.product_id = products.id) DESC;
 		$sql = DB::table('products');
-		$sql->orderBy(DB::raw('(SELECT COUNT(1) FROM sales WHERE sales.product_id = products.id)'), 'DESC');
+		//$sql->orderBy(DB::raw('(SELECT COUNT(1) FROM sales WHERE sales.product_id = products.id)'), 'DESC');
 		if ($limit !== null) $sql->take($limit);
 		return $sql;
 	}
