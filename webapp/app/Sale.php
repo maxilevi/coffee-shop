@@ -16,6 +16,8 @@ class Sale extends Model {
 		$sale->email = $email;
 		$sale->products = json_encode($products);
 		$sale->save();
+		$productCount = count($products);
+		Log::info("Created sale with order id '{$orderId}' of '{$productCount}' products by '{$email}'");
 	}
 
 	public static function getByMerchantOrderId($orderId)
