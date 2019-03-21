@@ -121,6 +121,7 @@ class PaymentController extends Controller
             Log::info("[IPN] Created merchant order with status '{$merchant_order->status}'");
             if($merchant_order->status == 'closed')
             {
+                Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
                 $payment = Payment::getByCode($request->input('code'));
                 Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
                 self::sendEmail($payment->email, $merchant_order->id);
