@@ -50,7 +50,7 @@ class DB():
             new_text += lines[i]  + '.'
             counted += len(lines[i])
             i += 1
-        return new_text
+        return new_text + ('...' if counted > 100 else '')
 
     def close(self):
         self.connection.close()

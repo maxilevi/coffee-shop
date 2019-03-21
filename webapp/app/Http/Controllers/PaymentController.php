@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use MercadoPago;
+use App\Payment;
 
 class PaymentController extends Controller
 {
@@ -11,6 +12,8 @@ class PaymentController extends Controller
     const SANDBOX_CLIENT_SECRET = "9Hl3A9XiQuvjGKY1sfAjPJ3QZq38IYyW";
     const CLIENT_ID = "4757717842404032";
     const CLIENT_SECRET = "2Y4pmHzCwJPoS9tTpXjLYIFnUtFYb8i7";
+    const SANDBOX_ACCESS_TOKEN = "TEST-7586911856100224-031914-98d00df9103107b534b7a6a63376efae-418076404";
+    const ACCESS_TOKEN = "";
     const IS_SANDBOX = true;
 
     public function handle(Request $request)
@@ -26,20 +29,20 @@ class PaymentController extends Controller
         $preference->shipments = $this->getShipment($request, $products);
         $preference->payment_methods = ["installments" => 1];
         $email = $request->input('email');
-        $encoded_products = json_encode($products);
         $preference->back_urls = [
-            "success" => "https://outletdecafe.com/api/success?email={$email}&products={$encoded_products}",
-            "failure" => "https://outletdecafe.com/api/failure?email={$email}",
-            "pending" => "https://outletdecafe.com/api/pending?email={$email}"
+            "success" => "https://outletdecafe.com/success?email={$email}",
+            "failure" => "https://outletdecafe.com/failure?email={$email}",
+            "pending" => "https://outletdecafe.com/pending?email={$email}"
         ];
         $preference->auto_return = "all";
-        $payment_code = Payment::create();
+        $payment_code = Payment::create($email, $products);
         $preference->notification_url = "https://outletdecafe.com/api/notifications?code={$payment_code}";
         $preference->save();
         $init_point = $preference->sandbox_init_point;
         if ($init_point === null)
         {
-            //print_r($preference->error);
+            print_r($preference->error);
+            print_r($preference->back_urls);
             return abort(500);
         }
         return redirect($init_point);
@@ -90,45 +93,25 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        if (!Payment::exists($request->input('code')) return;
-        Payment::delete($request->input('code'));
-        $orderId = $request->input('merchant_order_id');
-        Sale::create($orderId, $request->input('email'), $request->input('products'));
-        self::sendEmail($request->input('email'), $request->input('merchant_order_id'));
         CartController::empty();
         return redirect("/shipment/{$orderId}?success=true");
     }
 
-    private static function sendEmail($to, $orderId)
-    {
-        $headers = 'From: soporte@outletdecafe.com' . "\r\n" .
-                   'Reply-To: soporte@outletdecafe.com' . "\r\n";
-<<<BODY
-Hola,
-¡Gracias por tu compra en OUTLET DE CAFÉ!
-
-El pagó fue confirmado y el pedido esta en camino.
-Podes consultar el estado de tu pedido a traves de este link:
-* https://outletdecafe.com/shipments/{$orderId}
-
-¡Muchas Gracias!
-BODY>>>;
-        mail($to, 'Tu compra en OUTLET DE CAFÉ', $body, $headers);
-    }
-
     public function pending()
     {
-        return view('pending');  
+        CartController::empty();
+        return view('pending');
     }
 
     public function failure()
     {
-        return view('failure');    
+        CartController::empty();
+        return view('failure');
     }
 
     public function ipn(Request $request)
     {
-        MercadoPago\SDK::setAccessToken("ENV_ACCESS_TOKEN");
+        MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
         $merchant_order = null;
 
         switch($request->input('topic'))
@@ -142,15 +125,37 @@ BODY>>>;
         }
 
         $paid_amount = 0;
-        foreach ($merchant_order->payments as $payment) {   
-            if ($payment['status'] == 'approved'){
+        foreach ($merchant_order->payments as $payment)
+        {
+            if ($payment["status"] == "approved")
+            {
                 $paid_amount += $payment['transaction_amount'];
             }
         }
 
         if($paid_amount >= $merchant_order->total_amount)
         {
-            Sale::getByPaymentId($merchant_order->order_id)->markAsPaid();
+            $payment = Payment::getByCode($request->input('code'));
+            Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
+            self::sendEmail($payment->email, $request->input('merchant_order_id'));
+            $payment->delete();
         }
+    }
+
+    private static function sendEmail($to, $orderId)
+    {
+        $headers = 'From: soporte@outletdecafe.com' . "\r\n" .
+                   'Reply-To: soporte@outletdecafe.com' . "\r\n";
+        $body =<<<BODY
+Hola,
+¡Gracias por tu compra en OUTLET DE CAFÉ!
+
+El pagó fue confirmado y el pedido esta en camino.
+Podes consultar el estado de tu pedido a traves de este link:
+* https://outletdecafe.com/shipments/{$orderId}
+
+¡Muchas Gracias!
+BODY;
+        mail($to, 'Tu compra en OUTLET DE CAFÉ', $body, $headers);
     }
 }

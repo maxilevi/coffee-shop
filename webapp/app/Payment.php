@@ -9,21 +9,18 @@ class Payment extends Model {
 
 	protected $guarded = ['id'];
 
-	public static function create()
+	public static function create($email, $products)
 	{
 		$payment = new Payment();
 		$payment->code = uniqid();
+		$payment->email = $email;
+		$payment->products = json_encode($products);
 		$payment->save();
 		return $payment->code;
 	}
 
-	public static function exists($code)
+	public static function getByCode($code)
 	{
-		return Payment::where('code' '=', $code) !== null;
-	}
-
-	public static function delete()
-	{
-		Payment::where('code' '=', $code)->delete();
+		return Payment::where('code', '=', $code);
 	}
 }

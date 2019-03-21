@@ -1,0 +1,2 @@
+git push
+ssh -v root@134.209.127.184 "./update.sh"

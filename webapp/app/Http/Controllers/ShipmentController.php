@@ -17,7 +17,7 @@ class ShipmentController extends Controller
         return view('shipment')->with([]);
     }
 
-    public function getShipmentString($products)
+    public static function getShipmentString($products)
     {
     	return "30x30x30," . (250 * count($products));
     }
