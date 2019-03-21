@@ -40,7 +40,7 @@ class PaymentController extends Controller
         $preference->notification_url = "https://outletdecafe.com/api/notifications?code={$payment_code}";
         $preference->auto_return = "all";
         $preference->save();
-        $init_point = $preference->sandbox_init_point;
+        $init_point = $preference->init_point;
         if ($init_point === null)
         {
             print_r($preference->error);
