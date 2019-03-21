@@ -96,19 +96,17 @@ class PaymentController extends Controller
     {
         CartController::empty();
         $orderId = $request->input('merchant_order_id');
-        return redirect("/shipment/{$orderId}?success=true");
+        return redirect("/shipment/{$orderId}?success=true")->withCookie(CartController::empty());
     }
 
     public function pending()
     {
-        CartController::empty();
-        return view('pending');
+        return view('pending')->withCookie(CartController::empty());
     }
 
     public function failure()
     {
-        CartController::empty();
-        return view('failure');
+        return view('failure')->withCookie(CartController::empty());
     }
 
     public function ipn(Request $request)

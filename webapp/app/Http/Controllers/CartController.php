@@ -67,6 +67,6 @@ class CartController extends Controller
     }
 
     public static function empty() {
-        self::updateCookie([]);
+        return self::updateCookie([]);
     }
 }
