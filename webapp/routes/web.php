@@ -20,4 +20,4 @@ Route::get('/product/{id}', 'SingleProductController@index');
 Route::get('/shipment/{orderId}', 'ShipmentController@index');
 Route::get('/failure', 'PaymentController@failure');
 Route::get('/pending', 'PaymentController@pending');
-Route::get('/success', 'PaymentController@viewSuccess');
+Route::get('/success', 'PaymentController@success');
