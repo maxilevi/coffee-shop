@@ -24,20 +24,20 @@ class PaymentController extends Controller
         MercadoPago\SDK::setClientId(self::IS_SANDBOX ? self::SANDBOX_CLIENT_ID : self::CLIENT_ID);
         MercadoPago\SDK::setClientSecret(self::IS_SANDBOX ? self::SANDBOX_CLIENT_SECRET : self::CLIENT_SECRET);
 
-        $payment_code = Payment::create($email, $products);
         $preference = new MercadoPago\Preference();
         $preference->items = $this->getItems($products);
         $preference->payer = $this->getPayer($request);
         $preference->shipments = $this->getShipment($request, $products);
         $preference->payment_methods = ["installments" => 1];
         $email = $request->input('email');
+        $payment_code = Payment::create($email, $products);
         $preference->back_urls = [
             "success" => "https://outletdecafe.com/success?email={$email}",
             "failure" => "https://outletdecafe.com/failure?email={$email}",
             "pending" => "https://outletdecafe.com/pending?email={$email}"
         ];
-        $preference->auto_return = "all";
         $preference->notification_url = "https://outletdecafe.com/api/notifications?code={$payment_code}";
+        $preference->auto_return = "all";
         $preference->save();
         $init_point = $preference->sandbox_init_point;
         if ($init_point === null)
