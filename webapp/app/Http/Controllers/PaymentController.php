@@ -73,10 +73,6 @@ class PaymentController extends Controller
         $shipments = new MercadoPago\Shipments();
         $shipments->mode = "me2";
         $shipments->dimensions = ShipmentController::getShipmentString($products);
-        /*if (count($products) > 5)
-        {
-            $shipments->free_methods = [["id" => 73328]];
-        }*/
         return $shipments;
     }
 
@@ -123,6 +119,8 @@ class PaymentController extends Controller
             {
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
                 $payment = Payment::getByCode($request->input('code'));
+                $payment_string = var_export($payment);
+                Log::info("[IPN] Got payment {$payment_string}");
                 Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
                 self::sendEmail($payment->email, $merchant_order->id);
                 $payment->delete();
