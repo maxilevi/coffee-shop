@@ -114,38 +114,11 @@ class PaymentController extends Controller
     {
         Log::info("IPN RECEIVED topic='{$request->input('topic')}' id={$request->input("id")}");
         MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
-        $merchant_order = null;
-
-        switch($request->input('topic'))
-        {
-            case "payment":
-                $payment = MercadoPago\Payment::find_by_id($request->input("id"));
-                if($payment)
-                {
-                    Log::info("order_id='{$payment->order_id}'");
-                    $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
-                }
-                break;
-
-            case "merchant_order":
-                $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
-                break;
-        }
-
+        $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
         if ($merchant_order)
         {
-            Log::info('[IPN] Created merchant order');
-            $paid_amount = 0;
-            foreach ($merchant_order->payments as $payment)
-            {
-                if ($payment["status"] == "approved")
-                {
-                    $paid_amount += $payment['transaction_amount'];
-                }
-            }
-
-            Log::info("[IPN] Paid amount is '{$paid_amount}', expected '{$merchant_order->total_amount}'");
-            if($paid_amount >= $merchant_order->total_amount)
+            Log::info("[IPN] Created merchant order with status '{$merchant_order->status}'");
+            if($merchant_order->status == 'closed')
             {
                 $payment = Payment::getByCode($request->input('code'));
                 Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
@@ -154,7 +127,7 @@ class PaymentController extends Controller
                 Log::info("[IPN] Order '{$request->input('merchant_order_id')}' with code '{$request->input('code')}' was paid");
             }
         } else {
-            Log::info("Received an IPN but could not recreate the merchant id");
+            Log::info("Received an IPN with topic '{$request->input('topic')}' but could not recreate the merchant id");
         }
         return response('', 200);
     }
