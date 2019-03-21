@@ -120,7 +120,8 @@ class PaymentController extends Controller
         {
             case "payment":
                 $payment = MercadoPago\Payment::find_by_id($request->input("id"));
-                if($payment) {
+                if($payment)
+                {
                     Log::info("order_id='{$payment->order_id}'");
                     $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
                 }
@@ -147,6 +148,7 @@ class PaymentController extends Controller
                 Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
                 self::sendEmail($payment->email, $request->input('merchant_order_id'));
                 $payment->delete();
+                Log::info("[IPN] Order '{$request->input('merchant_order_id')}' with code '{$request->input('code')}' was paid");
             }
         } else {
             Log::info("Received an IPN but could not recreate the merchant id");
@@ -169,5 +171,6 @@ Podes consultar el estado de tu pedido a traves de este link:
 ¡Muchas Gracias!
 BODY;
         mail($to, 'Tu compra en OUTLET DE CAFÉ', $body, $headers);
+        Log::info("[MAIL] Sent email to '{$to}'");
     }
 }
