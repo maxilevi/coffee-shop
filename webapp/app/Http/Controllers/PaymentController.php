@@ -132,7 +132,9 @@ class PaymentController extends Controller
                 break;
         }
 
-        if ($merchant_order) {
+        if ($merchant_order)
+        {
+            Log::info('[IPN] Created merchant order');
             $paid_amount = 0;
             foreach ($merchant_order->payments as $payment)
             {
@@ -142,6 +144,7 @@ class PaymentController extends Controller
                 }
             }
 
+            Log::info("[IPN] Paid amount is '{$paid_amount}', expected '{$merchant_order->total_amount}'");
             if($paid_amount >= $merchant_order->total_amount)
             {
                 $payment = Payment::getByCode($request->input('code'));
