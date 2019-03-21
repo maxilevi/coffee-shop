@@ -112,7 +112,7 @@ class PaymentController extends Controller
 
     public function ipn(Request $request)
     {
-        Log::info("IPN RECEIVED topic='{$request->input('topic')}'");
+        Log::info("IPN RECEIVED topic='{$request->input('topic')}' id={$request->input("id")}");
         MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
         $merchant_order = null;
 
@@ -120,10 +120,15 @@ class PaymentController extends Controller
         {
             case "payment":
                 $payment = MercadoPago\Payment::find_by_id($request->input("id"));
-                Log::info("id={$request->input("id")} order_id='{$payment->order_id}'");
-                $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
+                if($payment) {
+                    Log::info("order_id='{$payment->order_id}'");
+                    $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
+                }
+                break;
+
             case "merchant_order":
                 $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
+                break;
         }
 
         if ($merchant_order) {
