@@ -23,6 +23,7 @@ class PaymentController extends Controller
         MercadoPago\SDK::setClientId(self::IS_SANDBOX ? self::SANDBOX_CLIENT_ID : self::CLIENT_ID);
         MercadoPago\SDK::setClientSecret(self::IS_SANDBOX ? self::SANDBOX_CLIENT_SECRET : self::CLIENT_SECRET);
 
+        $payment_code = Payment::create($email, $products);
         $preference = new MercadoPago\Preference();
         $preference->items = $this->getItems($products);
         $preference->payer = $this->getPayer($request);
@@ -35,7 +36,6 @@ class PaymentController extends Controller
             "pending" => "https://outletdecafe.com/pending?email={$email}"
         ];
         $preference->auto_return = "all";
-        $payment_code = Payment::create($email, $products);
         $preference->notification_url = "https://outletdecafe.com/api/notifications?code={$payment_code}";
         $preference->save();
         $init_point = $preference->sandbox_init_point;
@@ -94,6 +94,7 @@ class PaymentController extends Controller
     public function success(Request $request)
     {
         CartController::empty();
+        $orderId = $request->input('merchant_order_id');
         return redirect("/shipment/{$orderId}?success=true");
     }
 
@@ -140,6 +141,7 @@ class PaymentController extends Controller
             self::sendEmail($payment->email, $request->input('merchant_order_id'));
             $payment->delete();
         }
+        return response(200);
     }
 
     private static function sendEmail($to, $orderId)
