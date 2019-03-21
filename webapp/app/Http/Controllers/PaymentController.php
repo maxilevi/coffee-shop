@@ -9,11 +9,8 @@ use Log;
 
 class PaymentController extends Controller
 {
-    const SANDBOX_CLIENT_ID = "7586911856100224";
-    const SANDBOX_CLIENT_SECRET = "9Hl3A9XiQuvjGKY1sfAjPJ3QZq38IYyW";
     const CLIENT_ID = "4757717842404032";
     const CLIENT_SECRET = "2Y4pmHzCwJPoS9tTpXjLYIFnUtFYb8i7";
-    const SANDBOX_ACCESS_TOKEN = "TEST-7586911856100224-031914-98d00df9103107b534b7a6a63376efae-418076404";
     const ACCESS_TOKEN = "APP_USR-4757717842404032-031710-9406a351eb88dc4a26a777de58eeb715-203380971";
     const IS_SANDBOX = true;
 
@@ -21,8 +18,8 @@ class PaymentController extends Controller
     {
         $products = CartController::getProducts();
         if (count($products) === 0) return redirect('/');
-        MercadoPago\SDK::setClientId(self::IS_SANDBOX ? self::SANDBOX_CLIENT_ID : self::CLIENT_ID);
-        MercadoPago\SDK::setClientSecret(self::IS_SANDBOX ? self::SANDBOX_CLIENT_SECRET : self::CLIENT_SECRET);
+        MercadoPago\SDK::setClientId(self::CLIENT_ID);
+        MercadoPago\SDK::setClientSecret(self::CLIENT_SECRET);
 
         $preference = new MercadoPago\Preference();
         $preference->items = $this->getItems($products);
@@ -112,7 +109,7 @@ class PaymentController extends Controller
     public function ipn(Request $request)
     {
         Log::info('IPN RECEIVED');
-        MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
+        MercadoPago\SDK::setAccessToken(self::ACCESS_TOKEN);
         $merchant_order = null;
 
         switch($request->input('topic'))
