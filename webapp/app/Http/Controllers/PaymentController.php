@@ -122,21 +122,25 @@ class PaymentController extends Controller
                 $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
         }
 
-        $paid_amount = 0;
-        foreach ($merchant_order->payments as $payment)
-        {
-            if ($payment["status"] == "approved")
+        if ($merchant_order) {
+            $paid_amount = 0;
+            foreach ($merchant_order->payments as $payment)
             {
-                $paid_amount += $payment['transaction_amount'];
+                if ($payment["status"] == "approved")
+                {
+                    $paid_amount += $payment['transaction_amount'];
+                }
             }
-        }
 
-        if($paid_amount >= $merchant_order->total_amount)
-        {
-            $payment = Payment::getByCode($request->input('code'));
-            Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
-            self::sendEmail($payment->email, $request->input('merchant_order_id'));
-            $payment->delete();
+            if($paid_amount >= $merchant_order->total_amount)
+            {
+                $payment = Payment::getByCode($request->input('code'));
+                Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
+                self::sendEmail($payment->email, $request->input('merchant_order_id'));
+                $payment->delete();
+            }
+        } else {
+            Log::info("Received an IPN but could not recreate the merchant id");
         }
         return response('', 200);
     }
