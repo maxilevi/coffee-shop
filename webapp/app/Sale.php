@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class Sale extends Model {
 
@@ -12,7 +13,7 @@ class Sale extends Model {
 	public static function build($orderId, $email, $products)
 	{
 		$sale = new Sale();
-		$sale->order_id = $order_id;
+		$sale->order_id = $orderId;
 		$sale->email = $email;
 		$sale->products = json_encode($products);
 		$sale->save();
