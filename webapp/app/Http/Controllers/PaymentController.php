@@ -13,7 +13,7 @@ class PaymentController extends Controller
     const CLIENT_ID = "4757717842404032";
     const CLIENT_SECRET = "2Y4pmHzCwJPoS9tTpXjLYIFnUtFYb8i7";
     const SANDBOX_ACCESS_TOKEN = "TEST-7586911856100224-031914-98d00df9103107b534b7a6a63376efae-418076404";
-    const ACCESS_TOKEN = "";
+    const ACCESS_TOKEN = "APP_USR-4757717842404032-031710-9406a351eb88dc4a26a777de58eeb715-203380971";
     const IS_SANDBOX = true;
 
     public function handle(Request $request)
@@ -112,36 +112,38 @@ class PaymentController extends Controller
 
     public function ipn(Request $request)
     {
-        MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
-        $merchant_order = null;
+        if ($request->input('topic')) {
+            MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
+            $merchant_order = null;
 
-        switch($request->input('topic'))
-        {
-            case "payment":
-                $payment = MercadoPago\Payment::find_by_id($request->input("id"));
-                // Get the payment and the corresponding merchant_order reported by the IPN.
-                $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
-            case "merchant_order":
-                $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
-        }
-
-        $paid_amount = 0;
-        foreach ($merchant_order->payments as $payment)
-        {
-            if ($payment["status"] == "approved")
+            switch($request->input('topic'))
             {
-                $paid_amount += $payment['transaction_amount'];
+                case "payment":
+                    $payment = MercadoPago\Payment::find_by_id($request->input("id"));
+                    // Get the payment and the corresponding merchant_order reported by the IPN.
+                    $merchant_order = MercadoPago\MerchantOrder::find_by_id($payment->order_id);
+                case "merchant_order":
+                    $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
+            }
+
+            $paid_amount = 0;
+            foreach ($merchant_order->payments as $payment)
+            {
+                if ($payment["status"] == "approved")
+                {
+                    $paid_amount += $payment['transaction_amount'];
+                }
+            }
+
+            if($paid_amount >= $merchant_order->total_amount)
+            {
+                $payment = Payment::getByCode($request->input('code'));
+                Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
+                self::sendEmail($payment->email, $request->input('merchant_order_id'));
+                $payment->delete();
             }
         }
-
-        if($paid_amount >= $merchant_order->total_amount)
-        {
-            $payment = Payment::getByCode($request->input('code'));
-            Sale::create($merchant_order->order_id, $payment->email, json_decode($payment->products, true));
-            self::sendEmail($payment->email, $request->input('merchant_order_id'));
-            $payment->delete();
-        }
-        return response(200);
+        return response('', 200);
     }
 
     private static function sendEmail($to, $orderId)
