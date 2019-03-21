@@ -121,7 +121,7 @@ class PaymentController extends Controller
                 $payment = Payment::getByCode($request->input('code'));
                 $payment_string = $payment == null ? 'null' : 'not null';
                 Log::info("[IPN] Got payment '{$payment_string}'");
-                Log::info("asd " . count(Payment::where('1', 1)->get()));
+                Log::info("asd " . count(Payment::all()));
                 Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
                 self::sendEmail($payment->email, $merchant_order->id);
                 $payment->delete();
