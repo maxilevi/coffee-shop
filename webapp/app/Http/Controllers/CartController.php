@@ -55,7 +55,7 @@ class CartController extends Controller
     }
 
     private static function getExistingItems() {
-        return json_decode($_COOKIE[self::COOKIE_NAME], true) ?? [];
+        return json_decode($_COOKIE[self::COOKIE_NAME] ?? '{}', true);
     }
 
     private static function updateCookie(array $new) {
