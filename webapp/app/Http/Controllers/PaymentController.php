@@ -13,22 +13,13 @@ use Log;
 
 class PaymentController extends Controller
 {
-    const SANDBOX_CLIENT_ID = "8165552372634154";
-    const SANDBOX_CLIENT_SECRET = "EKzGVQzDTAEclfi6abTOBe3mc1DQ3J6A";
-    const SANDBOX_ACCESS_TOKEN = "APP_USR-8165552372634154-032118-219f451f278a1bc962f0b9809ca88b5e-418906657";
-
-    const CLIENT_ID = "4757717842404032";
-    const CLIENT_SECRET = "2Y4pmHzCwJPoS9tTpXjLYIFnUtFYb8i7";
-    const ACCESS_TOKEN = "APP_USR-4757717842404032-031710-9406a351eb88dc4a26a777de58eeb715-203380971";
-    const IS_SANDBOX = true;
 
     public function handle(Request $request)
     {
         $products = CartController::getProducts();
         if (count($products) === 0) return redirect('/');
-        MercadoPago\SDK::setClientId(self::IS_SANDBOX ? self::SANDBOX_CLIENT_ID : self::CLIENT_ID);
-        MercadoPago\SDK::setClientSecret(self::IS_SANDBOX ? self::SANDBOX_CLIENT_SECRET : self::CLIENT_SECRET);
 
+        MercadoHandler::authClient();
         $preference = new MercadoPago\Preference();
         $preference->items = $this->getItems($products);
         $preference->payer = $this->getPayer($request);
@@ -93,27 +84,30 @@ class PaymentController extends Controller
         return $payer;
     }
 
+    private function shipment(Request $request, $state)
+    {
+        return redirect("/shipment/{$request->input('merchant_order_id')}?state={$state}")->withCookie(CartController::empty());
+    }
+
     public function success(Request $request)
     {
-        CartController::empty();
-        $orderId = $request->input('merchant_order_id');
-        return redirect("/shipment/{$orderId}?success=true")->withCookie(CartController::empty());
+        return $this->shipment($request, 'success');
     }
 
-    public function pending()
+    public function failure(Request $request)
     {
-        return view('pending')->withCookie(CartController::empty());
+        return $this->shipment($request, 'failure');
     }
 
-    public function failure()
+    public function pending(Request $request)
     {
-        return view('failure')->withCookie(CartController::empty());
+        return $this->shipment($request, 'pending');
     }
 
     public function ipn(Request $request)
     {
         Log::info("IPN RECEIVED topic='{$request->input('topic')}' id={$request->input("id")}");
-        MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
+        MercadoHandler::authAccess();
         $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
         if ($merchant_order)
         {
@@ -121,12 +115,11 @@ class PaymentController extends Controller
             {
                 DB::beginTransaction();
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
-                $count = count(Payment::all());
                 Log::info("There are {$count} payments left");
                 $payment = Payment::getByCode($request->input('code'));
-                $payment->delete();
+                if ($payment !== null) $payment->delete();
                 DB::commit();
-                if ($payment)
+                if ($payment !== null)
                 {
                     Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
                     self::sendEmail($payment->email, $merchant_order->id);
@@ -141,7 +134,7 @@ class PaymentController extends Controller
 
     private static function sendEmail($to, $orderId)
     {
-        Mail::to($to)->send(new SaleEmail("https://outletdecafe.com/shipments/{$orderId}"));
+        Mail::to($to)->send(new SaleEmail("https://outletdecafe.com/shipment/{$orderId}"));
         Log::info("[MAIL] Sent email to '{$to}'");
     }
 }

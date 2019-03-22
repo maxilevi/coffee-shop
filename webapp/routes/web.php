@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index');
 Route::get('/cart/', 'CartController@index');
 Route::get('/checkout/', 'CheckoutController@index');
 Route::get('/product/{id}', 'SingleProductController@index');
-Route::get('/shipment/{orderId}', 'ShipmentController@index');
+Route::get('/shipment/{orderId?}', 'ShipmentController@index');
 Route::get('/failure', 'PaymentController@failure');
 Route::get('/pending', 'PaymentController@pending');
 Route::get('/success', 'PaymentController@success');

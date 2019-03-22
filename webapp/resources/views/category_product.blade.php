@@ -10,13 +10,13 @@
       </div>
     </div>
     </div>
-    <div class="uk-card-body">
-      <h4 class="uk-margin-remove-bottom">{{ $product->name }}</h4>
-      <p class="desc">{{ $product->short_description }}</p>
+    <div class="uk-card-body" style="min-height:120px;">
+      <h4 class="uk-margin-remove-bottom uk-text-uppercase uk-text-bold">{{ $product->name }}</h4>
+      <p class="desc uk-text-emphasis uk-text ">{{ $product->short_description }}</p>
     </div>
     <div class="uk-card-footer">
-      <span class="uk-align-left price subtext">${{ $product->price }}</span>
-      <span class="uk-align-right subtext">250gr</span>
+      <span class="uk-align-left price subtext uk-text-bold">${{ $product->price }}</span>
+      <span class="uk-align-right subtext uk-text-bold">250gr</span>
     </div>
   </div>
   </a>

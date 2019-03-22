@@ -18,7 +18,6 @@ class CreateSalesTable extends Migration
             $table->integer('order_id');
             $table->json('products');
             $table->string('email');
-            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

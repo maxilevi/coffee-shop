@@ -59,7 +59,7 @@ Carro de compras
                                         <div class="uk-width-expand uk-text-muted">Total</div>
                                         <div id="total" class="uk-text-lead uk-text-bolder"></div>
                                     </div>
-                                    <a class="uk-button uk-button-primary uk-margin-small uk-width-1-1" href="/checkout/">Comprar todo</a>
+                                    <a class="uk-button uk-button-primary uk-margin-small uk-width-1-1 tm-shine" href="/checkout/">Comprar todo</a>
                                 </div>
                             </div>
                         </div>

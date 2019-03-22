@@ -93,7 +93,7 @@ CHECKOUT
                                                 <div class="uk-text-lead uk-text-bolder" id="total"></div>
                                             </div>
                                         </div>
-                                        <button type="submit" form="payment_form" onclick="document.getElementById('hidden-submit-button')" class="uk-button uk-button-primary uk-margin-small uk-width-1-1">SIGUIENTE</button>
+                                        <button type="submit" form="payment_form" onclick="document.getElementById('hidden-submit-button')" class="tm-shine uk-button uk-button-primary uk-margin-small uk-width-1-1">SIGUIENTE</button>
                                     </section>
                                 </div>
                             </div>
