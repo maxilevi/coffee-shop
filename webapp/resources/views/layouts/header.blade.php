@@ -40,6 +40,7 @@
           </li>
           <li><a href="/">Más Vendidos</a></li>
           <li><a href="/shipment">Estado del envío</a></li>
+          <li><a href="/contact">Contacto</a></li>
         </ul>
       </div>
       <div class="uk-navbar-right">
