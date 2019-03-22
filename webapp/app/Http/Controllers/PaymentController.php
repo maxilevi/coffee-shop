@@ -7,6 +7,7 @@ use MercadoPago;
 use App\Payment;
 use App\Sale;
 use App\Mail\TestEmail;
+use Illuminate\Support\Facades\Mail;
 use Log;
 
 class PaymentController extends Controller
