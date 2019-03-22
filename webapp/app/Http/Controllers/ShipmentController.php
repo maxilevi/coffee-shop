@@ -36,7 +36,7 @@ class ShipmentController extends Controller
             $shipment->id = $sale->order_id;
             $shipment->date = $merchant_order->date_created;
             $shipment->status = $this->parseStatusMessage($merchant_order->shipment->status);
-            $shipment->statusMessage = $merchant_order->shipment->status;
+            $shipment->statusMessage = $merchant_order->shipments->status;
             return [$shipment];
         }
         return [];
