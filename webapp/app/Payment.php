@@ -21,6 +21,6 @@ class Payment extends Model {
 
 	public static function getByCode($code)
 	{
-		return Payment::where('code', $code)->first();
+		return Payment::where('code', '=', $code)->first();
 	}
 }

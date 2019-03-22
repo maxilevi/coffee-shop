@@ -120,17 +120,16 @@ class PaymentController extends Controller
             if($merchant_order->status == 'closed')
             {
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
-                DB::transaction(function () use($request, $merchant_order) {
-                    $payment = Payment::getByCode($request->input('code'));
-                    if ($payment)
-                    {
-                        Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
-                        self::sendEmail($payment->email, $merchant_order->id);
-                        $payment->delete();
-                        Log::info("[IPN] Order '{$merchant_order->id}' with code '{$request->input('code')}' was paid"); 
-                    }
-                });
-                DB::commit();
+                $count = count(Payment::all());
+                Log::info("There are ${$count} payments left");
+                $payment = Payment::getByCode($request->input('code'));
+                $payment->delete();
+                if ($payment)
+                {
+                    Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
+                    self::sendEmail($payment->email, $merchant_order->id);
+                    Log::info("[IPN] Order '{$merchant_order->id}' with code '{$request->input('code')}' was paid"); 
+                }
             }
         } else {
             Log::info("Received an IPN with topic '{$request->input('topic')}' but could not recreate the merchant id");
@@ -140,7 +139,7 @@ class PaymentController extends Controller
 
     private static function sendEmail($to, $orderId)
     {
-        Mail::to($to)->send(new SaleEmail('https://outletdecafe.com/shipments/{$orderId}'));
+        Mail::to($to)->send(new SaleEmail("https://outletdecafe.com/shipments/{$orderId}"));
         Log::info("[MAIL] Sent email to '{$to}'");
     }
 }
