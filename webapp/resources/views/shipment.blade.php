@@ -17,10 +17,7 @@ Estado del envío
 		</form>
 		<hr>
 	    <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
-	    	<header class="uk-card-header">
-	    		<h1 class="uk-h2">Pedidos</h1>
-	    		@each('shipment_order', $shipments, 'shipment', 'shipment_empty')
-	    	</header>
+	    	@each('shipment_order', $shipments, 'shipment', 'shipment_empty')
 	    </div>
 	    <br>
 	</div>

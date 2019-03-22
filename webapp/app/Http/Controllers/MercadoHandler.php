@@ -22,6 +22,11 @@ final class MercadoHandler
 
     public static function authAccess()
     {
-    	MercadoPago\SDK::setAccessToken(self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN);
+    	MercadoPago\SDK::setAccessToken(self::getAccessToken());
+    }
+
+    public static function getAccessToken()
+    {
+    	return self::IS_SANDBOX ? self::SANDBOX_ACCESS_TOKEN : self::ACCESS_TOKEN;
     }
 }

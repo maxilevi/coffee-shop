@@ -30,21 +30,45 @@ class ShipmentController extends Controller
         {
             MercadoHandler::authAccess();
             $merchant_order = MercadoPago\MerchantOrder::find_by_id($orderId);
+            $shipmentsObject = $this->getShipment($orderId, MercadoHandler::getAccessToken());
             $shipment = (object)[];
             $shipment->price = $merchant_order->total_amount;
             $shipment->products = json_decode($sale->products, true);
-            $shipment->id = $sale->order_id;
-            $shipment->date = $merchant_order->date_created;
-            $shipment->status = $this->parseStatusMessage($merchant_order->shipments->status);
-            $shipment->statusMessage = $merchant_order->shipments->status;
+            $shipment->id = $orderId;
+            $shipment->date = date('Y-m-d - h:m:s', strtotime($merchant_order->date_created));
+            $shipment->statusMessage = $this->parseStatusMessage($shipmentsObject["status"]);
+            $shipment->status = $this->parseStatusState($shipmentsObject["status"]);
             return [$shipment];
         }
         return [];
     }
 
+    private function getShipment($orderId, $accessToken)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.mercadopago.com/merchant_orders/{$orderId}?access_token={$accessToken}"); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = json_decode(curl_exec($ch), true)["shipments"]; 
+        curl_close($ch);
+        return $output[0];
+    }
+
     private function parseStatusMessage($msg)
     {
-        return $msg;
+        if ($msg == "ready_to_ship")
+        {
+            return "EN PROCCESO";
+        }
+        return "DESPACHADO";   
+    }
+
+    private function parseStatusState($msg)
+    {
+        if ($msg == "ready_to_ship")
+        {
+            return "process";
+        }
+        return "success";
     }
 
     public static function getShipmentString($products)
