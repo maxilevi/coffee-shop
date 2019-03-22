@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use MercadoPago;
 use App\Payment;
 use App\Sale;
-use App\Mail\TestEmail;
+use App\Mail\SaleEmail;
 use Illuminate\Support\Facades\Mail;
 use Log;
 
