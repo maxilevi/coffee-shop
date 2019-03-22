@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use MercadoPago;
 
-static class MercadoHandler
+final class MercadoHandler
 {
 	const SANDBOX_CLIENT_ID = "8165552372634154";
     const SANDBOX_CLIENT_SECRET = "EKzGVQzDTAEclfi6abTOBe3mc1DQ3J6A";
