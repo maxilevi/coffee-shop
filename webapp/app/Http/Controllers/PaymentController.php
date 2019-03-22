@@ -119,14 +119,17 @@ class PaymentController extends Controller
             if($merchant_order->status == 'closed')
             {
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
-                $payment = Payment::getByCode($request->input('code'));
-                if ($payment)
-                {
-                    Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
-                    self::sendEmail($payment->email, $merchant_order->id);
-                    $payment->delete();
-                    Log::info("[IPN] Order '{$merchant_order->id}' with code '{$request->input('code')}' was paid"); 
-                }
+                DB::transaction(function () {
+                    $payment = Payment::getByCode($request->input('code'));
+                    if ($payment)
+                    {
+                        Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
+                        self::sendEmail($payment->email, $merchant_order->id);
+                        $payment->delete();
+                        Log::info("[IPN] Order '{$merchant_order->id}' with code '{$request->input('code')}' was paid"); 
+                    }
+                });
+                DB::commit();
             }
         } else {
             Log::info("Received an IPN with topic '{$request->input('topic')}' but could not recreate the merchant id");
