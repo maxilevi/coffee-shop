@@ -119,11 +119,13 @@ class PaymentController extends Controller
         {
             if($merchant_order->status == 'closed')
             {
+                DB::beginTransaction();
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
                 $count = count(Payment::all());
                 Log::info("There are ${$count} payments left");
                 $payment = Payment::getByCode($request->input('code'));
                 $payment->delete();
+                DB::endTransaction();
                 if ($payment)
                 {
                     Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
