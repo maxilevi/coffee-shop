@@ -136,7 +136,7 @@ class PaymentController extends Controller
 
     private static function sendEmail($to, $orderId)
     {
-        Mail::to($to)->send(new TestEmail('https://outletdecafe.com/shipments/{$orderId}'));
+        Mail::to($to)->send(new SaleEmail('https://outletdecafe.com/shipments/{$orderId}'));
         Log::info("[MAIL] Sent email to '{$to}'");
     }
 }
