@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use MercadoPago;
 use App\Payment;
 use App\Sale;
+use App\Mail\TestEmail;
 use Log;
 
 class PaymentController extends Controller
@@ -114,18 +115,17 @@ class PaymentController extends Controller
         $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
         if ($merchant_order)
         {
-            Log::info("[IPN] Created merchant order with status '{$merchant_order->status}'");
             if($merchant_order->status == 'closed')
             {
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
                 $payment = Payment::getByCode($request->input('code'));
-                $payment_string = $payment == null ? 'null' : 'not null';
-                Log::info("[IPN] Got payment '{$payment_string}'");
-                Log::info("asd " . count(Payment::all()));
-                Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
-                self::sendEmail($payment->email, $merchant_order->id);
-                $payment->delete();
-                Log::info("[IPN] Order '{$merchant_order->id}' with code '{$request->input('code')}' was paid");
+                if ($payment)
+                {
+                    Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
+                    self::sendEmail($payment->email, $merchant_order->id);
+                    $payment->delete();
+                    Log::info("[IPN] Order '{$merchant_order->id}' with code '{$request->input('code')}' was paid"); 
+                }
             }
         } else {
             Log::info("Received an IPN with topic '{$request->input('topic')}' but could not recreate the merchant id");
@@ -135,19 +135,7 @@ class PaymentController extends Controller
 
     private static function sendEmail($to, $orderId)
     {
-        $headers = 'From: soporte@outletdecafe.com' . "\r\n" .
-                   'Reply-To: soporte@outletdecafe.com' . "\r\n";
-        $body =<<<BODY
-Hola,
-¡Gracias por tu compra en OUTLET DE CAFÉ!
-
-El pagó fue confirmado y el pedido esta en camino.
-Podes consultar el estado de tu pedido a traves de este link:
-* https://outletdecafe.com/shipments/{$orderId}
-
-¡Muchas Gracias!
-BODY;
-        mail($to, 'Tu compra en OUTLET DE CAFÉ', $body, $headers);
+        Mail::to($to)->send(new TestEmail('https://outletdecafe.com/shipments/{$orderId}'));
         Log::info("[MAIL] Sent email to '{$to}'");
     }
 }
