@@ -120,7 +120,7 @@ class PaymentController extends Controller
             if($merchant_order->status == 'closed')
             {
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
-                DB::transaction(function () {
+                DB::transaction(function () use($request, $merchant_order) {
                     $payment = Payment::getByCode($request->input('code'));
                     if ($payment)
                     {
