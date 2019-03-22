@@ -30,7 +30,7 @@ class ShipmentController extends Controller
         {
             MercadoHandler::authAccess();
             $merchant_order = MercadoPago\MerchantOrder::find_by_id($orderId);
-            $shipment = new StdClass();
+            $shipment = new stdClass();
             $shipment->price = $merchant_order->total_amount;
             $shipment->products = json_decode($sale->products, true);
             $shipment->id = $sale->order_id;
