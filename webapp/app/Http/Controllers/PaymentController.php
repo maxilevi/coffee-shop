@@ -122,7 +122,7 @@ class PaymentController extends Controller
                 DB::beginTransaction();
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");
                 $count = count(Payment::all());
-                Log::info("There are ${$count} payments left");
+                Log::info("There are {$count} payments left");
                 $payment = Payment::getByCode($request->input('code'));
                 $payment->delete();
                 DB::endTransaction();
