@@ -21,3 +21,6 @@ Route::get('/shipment/{orderId}', 'ShipmentController@index');
 Route::get('/failure', 'PaymentController@failure');
 Route::get('/pending', 'PaymentController@pending');
 Route::get('/success', 'PaymentController@success');
+Route::get('/mailable', function () {
+    return new App\Mail\SaleEmail('https://outletdecafe.com/shipment/1');
+});

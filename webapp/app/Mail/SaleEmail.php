@@ -31,8 +31,8 @@ class SaleEmail extends Mailable
     public function build()
     {
         return $this->view('email.sale')
-                    ->from('soporte@outletdecafe.com', 'Soporte al cliente')
-                    ->replyTo('soporte@outletdecafe.com', 'Soporte al cliente')
+                    ->from('soporte@outletdecafe.com', 'Juan de OUTLET DE CAFÉ')
+                    ->replyTo('soporte@outletdecafe.com', 'Juan de OUTLET DE CAFÉ')
                     ->subject('Tu compra en OUTLET DE CAFÉ')
                     ->bcc('maxilevi77@gmail.com')
                     ->with(['shippingUrl' => $this->shippingUrl]);

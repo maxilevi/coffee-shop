@@ -2,20 +2,22 @@
 <html lang="en-US">
 	<head>
 		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css" />
 	</head>
 	<body>
-	<p>
-	Hola,
-	¡Gracias por tu compra en OUTLET DE CAFÉ!
-
-	El pagó fue confirmado y el pedido esta en camino.
-	Podes consultar el estado de tu pedido <a href="{{ $shippingUrl }}">acá</a>
-
-	¡Muchas Gracias!
-	<hr>
-
-	Links:
-		[1] $shippingUrl
+		<h3>Hola,</h3>
+		<span>¡Gracias por tu compra en OUTLET DE CAFÉ!</span>
+		<br>
+		<p>
+		El pagó fue confirmado y el pedido esta en camino.
+		Podes consultar el estado de tu pedido <a href="{{ $shippingUrl }}">acá</a>
 		</p>
+
+		<span>¡Muchas Gracias!</span>
+		<hr>
+		<span>Links:</span><br>
+		<ul>
+			<li>{{ $shippingUrl }}</li>
+		</ul>
 	</body>
 </html>
