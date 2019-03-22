@@ -125,7 +125,7 @@ class PaymentController extends Controller
                 Log::info("There are {$count} payments left");
                 $payment = Payment::getByCode($request->input('code'));
                 $payment->delete();
-                DB::endTransaction();
+                DB::commit();
                 if ($payment)
                 {
                     Sale::build($merchant_order->id, $payment->email, json_decode($payment->products, true));
