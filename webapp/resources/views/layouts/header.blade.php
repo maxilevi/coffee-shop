@@ -2,6 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <meta name="google-site-verification" content="yXVNbGUeBCwZfdhNWkzWSwKEgGMepYgZxB6z8IgQ0ko" />
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55659525-11"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-55659525-11');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="description" content="Venta de cafe premium y en granos. Envío a domicilio.">
   <meta name="tags" content="cafe premium, cafe en grano, cafeteria, envio a domicilio, ecommerce, bonafide, cafe martinez, juan valdez, havanna">
