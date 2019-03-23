@@ -17,13 +17,27 @@ class ImageFormatter():
         if bbox:
             return im.crop(bbox)
 
+    def convert_transparent_to_white(self, im):
+        if not im.mode == 'RGBA':
+            im = im.convert('RGBA')
+
+        pixdata = im.load()
+        width, height = im.size
+        for y in range(height):
+            for x in range(width):
+                if pixdata[x, y][3] == 0:
+                    pixdata[x, y] = (255, 255, 255, 255)
+
+        if not im.mode == 'RGB':
+            im = im.convert('RGB')
+        return im
+
     def format(self, url, save_dir):
         name = self.random_code() + '.jpg'
         tmp_path = save_dir + name
         urllib.request.urlretrieve(url, tmp_path)
         im = Image.open(tmp_path)
-        if not im.mode == 'RGB':
-            im = im.convert('RGB')
+        im = self.convert_transparent_to_white(im)
         im.save(tmp_path, quality=95)
         image = Image.open(tmp_path)
         width = image.size[0]
