@@ -1,4 +1,4 @@
-<article class="tm-product-card uk-first-column">
+<article class="tm-product-card uk-first-column uk-box-shadow-small">
     <div class="tm-product-card-media">
         <div class="tm-ratio tm-ratio-4-3">
             <a class="tm-media-box" href="/product/{{ $product->id }}">
@@ -6,7 +6,7 @@
             </a>
         </div>
     </div>
-    <div class="tm-product-card-body">
+    <div class="tm-product-card-body uk-card-body">
         <div class="tm-product-card-info">
             <div class="uk-text-meta uk-margin-xsmall-bottom uk-text-uppercase">{{ $product->brand }}</div>
             <h3 class="tm-product-card-title"><a class="uk-link-heading uk-text-uppercase uk-text-emphasis" href="/product/{{ $product->id }}">{{ $product->name }}</a></h3>
@@ -16,7 +16,7 @@
         </div>
         <div class="tm-product-card-shop">
             <div class="tm-product-card-prices">
-                <div class="tm-product-card-price" style="color:green;">${{ $product->price }} ARS</div>
+                <div class="tm-product-card-price uk-text-emphasis" >${{ $product->price }} ARS</div>
             </div>
             <div class="tm-product-card-add">
                 <div class="uk-text-meta tm-product-card-actions">

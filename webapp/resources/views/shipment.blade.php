@@ -25,5 +25,20 @@ Estado del envío
 	    <br>
 	</div>
 </div>
-
+@section('scripts')
+<script>
+var state = '{{ $state }}';
+var success_message = "<span uk-icon='icon: check'></span> El pedido fue creado con exíto.";
+var failure_message = "<span uk-icon='icon: ban'></span> No hemos podido confirmar el pago. Si esto es un error contactate con soporte.";
+if (state != null && state != '')
+{
+	UIkit.notification({
+	    message: state == 'success' ? success_message : failure_message,
+	    status: state == 'success' ? 'success' : 'danger',
+	    pos: 'top-center',
+	    timeout: 5000
+	});
+}
+</script>
+@endsection
 @include('layouts.footer')

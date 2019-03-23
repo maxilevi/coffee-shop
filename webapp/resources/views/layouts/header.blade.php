@@ -11,6 +11,29 @@
     gtag('js', new Date());
     gtag('config', 'UA-55659525-11');
   </script>
+  <script>
+    var state = false;
+    function handleMenu() {
+      if (state) closeMenu();
+      else openMenu();
+    }
+    function openMenu() {
+      var oldParent = document.getElementById('collapsed-menu'); 
+      var newParent = document.getElementById('menu-placer');
+      while (oldParent.childNodes.length > 0) {
+          newParent.appendChild(oldParent.childNodes[0]);
+      }
+      state = true;
+    }
+    function closeMenu() {
+      var oldParent = document.getElementById('menu-placer'); 
+      var newParent = document.getElementById('collapsed-menu');
+      while (oldParent.childNodes.length > 0) {
+          newParent.appendChild(oldParent.childNodes[0]);
+      }
+      state = false;
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="description" content="Venta de cafe premium y en granos. Envío a domicilio.">
   <meta name="tags" content="cafe premium, cafe en grano, cafeteria, envio a domicilio, ecommerce, bonafide, cafe martinez, juan valdez, havanna">
@@ -25,11 +48,17 @@
   <div class="uk-container">
     <nav class="uk-navbar-container uk-navbar navbar" uk-navbar>
       <div class="uk-navbar-left">
-        <a class="uk-navbar-item uk-logo uk-text-lead" href="/">
+        <a class="uk-navbar-item uk-logo uk-text-lead logo" href="/">
         <img src="/img/coffee.png" width="40" height="auto"><span class="uk-text-bold uk-text-emphasis" style="font-size:20px;">OUTLET DE CAFÉ</span></img></a>
       </div>
-      <div class="uk-navbar-center uk-visible@m">
-        <ul class="uk-navbar-nav">
+      <button type="button" class="navbar-toggle uk-hidden@m" onclick="handleMenu();">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <div class="uk-navbar-center toggle-target collapsed">
+        <ul class="uk-navbar-nav" id="collapsed-menu">
           <li class="uk-active"><a href="/">Inicio</a></li>
           <li>
             <a href="#">Categorías <span data-uk-icon="icon: triangle-down"></span></a>
@@ -52,7 +81,7 @@
           <li><a href="/contact">Contacto</a></li>
         </ul>
       </div>
-      <div class="uk-navbar-right">
+      <div class="uk-navbar-right toggle-target">
         <a href="/cart/" uk-icon="cart" class="uk-icon">
         @php
           use App\Http\Controllers\CartController;
@@ -65,6 +94,8 @@
   </div>
 </header>
 <body>
+<div id="menu-placer" class="menu-placer uk-text-uppercase uk-text-meta">
+</div>
 <div class="uk-height-large uk-background-cover uk-light uk-flex cover-img" uk-parallax="bgy: -50">
     <h1 class="uk-width-1-2@b uk-text-center uk-margin-auto uk-margin-auto-vertical uk-text-uppercase banner-title uk-text-bold">@yield('banner')</h1>
 </div>

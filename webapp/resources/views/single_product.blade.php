@@ -147,7 +147,7 @@ $images = json_decode($product->images, true);
         <hr>
         <h2 class="uk-text-emphasis uk-text-bold uk-text-uppercase">Productos Similares</h2>
         <div class="uk-grid uk-grid-small uk-child-width-1-2 uk-child-width-1-3@m uk-child-width-1-4@l uk-grid-match" data-uk-lightbox="toggle:a.uk-position-cover" data-uk-grid>
-            @each('similar_product', $top_products, 'product')
+            @each('category_product', $top_products, 'product')
         </div>
     </div>
     <hr>

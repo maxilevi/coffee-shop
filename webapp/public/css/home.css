@@ -7038,8 +7038,8 @@ iframe.uk-cover {
 }
 
 .tm-product-card-price {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 400;
     line-height: 1
 }
 
@@ -7061,8 +7061,8 @@ iframe.uk-cover {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     padding: 0;
     border-radius: 500px;
     -webkit-box-pack: center;
