@@ -29,11 +29,11 @@ class PaymentController extends Controller
         $payment_code = Payment::create($email, $products);
         $preference->back_urls = [
             "success" => "https://outletdecafe.com/success?email={$email}",
-            "failure" => "https://outletdecafe.com/failure?email={$email}",
-            "pending" => "https://outletdecafe.com/pending?email={$email}"
+            "failure" => "https://outletdecafe.com/failure?email={$email}"
         ];
         $preference->notification_url = "https://outletdecafe.com/api/notifications?code={$payment_code}";
         $preference->auto_return = "all";
+        $preference->binary_mode = true;
         $preference->save();
         $init_point = $preference->init_point;
         if ($init_point === null)
