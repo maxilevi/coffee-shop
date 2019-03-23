@@ -73,7 +73,7 @@ $images = json_decode($product->images, true);
                                                         <div class="uk-grid-small uk-child-width-1-1" uk-grid>
                                                             <div>
                                                                 <div class="uk-text-meta">Precio</div>
-                                                                <div class="tm-product-price">${{ $product->price }}</div>
+                                                                <div class="tm-product-price">${{ $product->price }} ARS</div>
                                                             </div>
                                                             <div>
                                                                 <div class="uk-grid-small" uk-grid>

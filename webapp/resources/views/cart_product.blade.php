@@ -23,7 +23,7 @@
             <div class="uk-grid-small uk-child-width-1-1 uk-child-width-expand@s uk-text-center" uk-grid>
                 <div>
                     <div class="uk-text-muted uk-hidden@m">Precio</div>
-                    <div class="uk-text-emphasis">${{ $product->price }}</div>
+                    <div class="uk-text-emphasis">${{ $product->price }} ARS</div>
                 </div>
                 <div class="tm-cart-quantity-column">
                     <!-- <a onclick="increment(-1, 'product-1')" uk-icon="icon: minus; ratio: .75"></a> -->
@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <div class="uk-text-muted uk-hidden@m">Valor</div>
-                    <div class="uk-text-emphasis">${{ $product->value }}</div>
+                    <div class="uk-text-emphasis">${{ $product->value }} ARS</div>
                 </div>
                 <div class="uk-width-auto@s">
                 <form action="">

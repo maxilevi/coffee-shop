@@ -12,8 +12,10 @@ class CartController extends Controller
 
     public function index(Request $request)
     {
+        $products = $this->getProducts();
+        if (count($products) === 0) return redirect('/');
     	return view('cart')->with([
-    		'products' => $this->getProducts()
+    		'products' => $products
     	]);
     }
 

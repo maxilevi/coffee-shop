@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th class="uk-width-medium">Total</th>
-                <td>${{ $shipment->price }}</td>
+                <td>${{ $shipment->price }} ARS</td>
             </tr>
             <tr>
                 <th class="uk-width-medium">Estado</th>

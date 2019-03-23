@@ -2,12 +2,20 @@ import urllib.request
 import string
 import random
 from os import path
-from PIL import Image
+from PIL import Image, ImageChops
 
 class ImageFormatter():
 
     def random_code(self) -> str:
         return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+
+    def trim(self, im):
+        bg = Image.new(im.mode, im.size, im.getpixel((0,0)))
+        diff = ImageChops.difference(im, bg)
+        diff = ImageChops.add(diff, diff, 2.0, -100)
+        bbox = diff.getbbox()
+        if bbox:
+            return im.crop(bbox)
 
     def format(self, url, save_dir):
         name = self.random_code() + '.jpg'
@@ -39,6 +47,6 @@ class ImageFormatter():
             offset = (height - new_height) / 2
             resize = (0, offset, width, height - offset)
 
-        thumb = image#.crop(resize).resize((ideal_width, ideal_height), Image.ANTIALIAS)
+        thumb = self.trim(image)#.crop(resize).resize((ideal_width, ideal_height), Image.ANTIALIAS)
         thumb.save(tmp_path, quality=95)
         return name

@@ -9,9 +9,9 @@
 	    for(var i = 0; i < products.length; ++i) {
 	        subtotal += products[i].value;
 	    }
-	    document.getElementById('subtotal').innerText = '$' + subtotal;
-	    document.getElementById('discount').innerText = '-$' + discount;
-	    document.getElementById('total').innerText = '$' + (subtotal - discount);
+	    document.getElementById('subtotal').innerText = '$' + subtotal + ' ARS';
+	    document.getElementById('discount').innerText = '-$' + discount + ' ARS';
+	    document.getElementById('total').innerText = '$' + (subtotal - discount) + ' ARS';
 	}
 	refresh();
 </script>
