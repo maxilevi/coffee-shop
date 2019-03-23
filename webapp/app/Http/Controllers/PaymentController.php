@@ -42,7 +42,7 @@ class PaymentController extends Controller
             print_r($preference->back_urls);
             return abort(500);
         }
-        return redirect($init_point);
+        return redirect($init_point)->withCookie(CartController::empty());
     }
 
     private function getItems($products)
@@ -86,7 +86,7 @@ class PaymentController extends Controller
 
     private function shipment(Request $request, $state)
     {
-        return redirect("/shipment/{$request->input('merchant_order_id')}?state={$state}")->withCookie(CartController::empty());
+        return redirect("/shipment/{$request->input('merchant_order_id')}?state={$state}");
     }
 
     public function success(Request $request)
