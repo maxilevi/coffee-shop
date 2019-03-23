@@ -49,7 +49,7 @@
     <nav class="uk-navbar-container uk-navbar navbar" uk-navbar>
       <div class="uk-navbar-left">
         <a class="uk-navbar-item uk-logo uk-text-lead logo" href="/">
-        <img src="/img/coffee.png" width="40" height="auto"><span class="uk-text-bold uk-text-emphasis" style="font-size:20px;">OUTLET DE CAFÉ</span></img></a>
+        <img src="/img/coffee.png" width="40" height="auto"><span class="uk-text-bold uk-text-emphasis logo-text">OUTLET DE CAFÉ</span></img></a>
       </div>
       <button type="button" class="navbar-toggle uk-hidden@m" onclick="handleMenu();">
           <span class="sr-only">Toggle navigation</span>
@@ -58,7 +58,7 @@
           <span class="icon-bar"></span>
       </button>
       <div class="uk-navbar-center toggle-target collapsed">
-        <ul class="uk-navbar-nav" id="collapsed-menu">
+        <ul class="uk-navbar-nav nav-text" id="collapsed-menu">
           <li class="uk-active"><a href="/">Inicio</a></li>
           <li>
             <a href="#">Categorías <span data-uk-icon="icon: triangle-down"></span></a>
