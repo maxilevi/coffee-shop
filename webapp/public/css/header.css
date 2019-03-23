@@ -72,7 +72,7 @@ html {
 .uk-navbar button.navbar-toggle .icon-bar + .icon-bar {
   margin-top: 4px;
 }
-@media (max-width: 959px) {
+@media (max-width: 1024px) {
   .uk-navbar .toggle-target.collapsed {
     display: none;
   }
