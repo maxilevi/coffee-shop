@@ -12,7 +12,9 @@ class SingleProductController extends Controller
 
     public function index($id)
     {
-        $topProducts = Product::getTopProducts(self::SIMILAR_PRODUCTS_LIMIT)->get();
+        $topProducts = Product::getTopProducts(function ($sql) {
+            return $sql->take(self::SIMILAR_PRODUCTS_LIMIT);
+        });
         $product = DB::table('products')->where('id', $id)->first();
         if ($product !== null)
         {

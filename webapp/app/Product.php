@@ -9,13 +9,21 @@ class Product extends Model {
 
 	protected $guarded = ['id'];
 
-	public static function getTopProducts(int $limit = null) {
+	public static function getTopProducts(callable $filter = null) {
 		# SELECT * FROM products ORDER BY (SELECT COUNT(1) FROM sales WHERE sales.product_id = products.id) DESC;
 		$sql = DB::table('products');
+		if ($filter) $sql = $filter($sql);
 		//$sql->orderBy(DB::raw('(SELECT COUNT(1) FROM sales WHERE sales.product_id = products.id)'), 'DESC');
-		if ($limit !== null) $sql->take($limit);
-		return $sql;
+		$products = $sql->get();
+		self::modifyPrice($products);
+		return $products;
 	}
+
+    private static function modifyPrice(&$products) {
+    	foreach ($products as &$product) {
+    		$product->price = Product::calculatePrice($product->price);
+    	}
+    }
 
 	public static function calculatePrice(int $price) {
 		return ceil(($price * .25) / 50) * 50 - 1;
