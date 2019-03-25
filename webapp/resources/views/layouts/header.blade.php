@@ -35,7 +35,7 @@
     }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="description" content="Venta de cafe premium y en granos. Envío a domicilio.">
+  <meta name="description" content="Venta de cafe premium y en granos. Perfecto para los amantes del café. Envío a domicilio.">
   <meta name="tags" content="cafe premium, cafe en grano, cafeteria, envio a domicilio, ecommerce, bonafide, cafe martinez, juan valdez, havanna">
   <title>OUTLET DE CAFÉ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css" />
