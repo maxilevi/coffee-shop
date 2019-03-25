@@ -111,7 +111,7 @@ class PaymentController extends Controller
         $merchant_order = MercadoPago\MerchantOrder::find_by_id($request->input("id"));
         if ($merchant_order)
         {
-            if($merchant_order->status == 'closed')
+            if($merchant_order->status == 'closed' && $merchant_order->paid_amount >= $merchant_order->total_amount)
             {
                 DB::beginTransaction();
                 Log::info("[IPN] Received IPN with code '{$request->input('code')}'");

@@ -55,20 +55,23 @@ class ShipmentController extends Controller
 
     private function parseStatusMessage($msg)
     {
+        return "EN PROCCESO";
+        /*
         if ($msg == "ready_to_ship")
         {
             return "EN PROCCESO";
         }
-        return "DESPACHADO";   
+        return "DESPACHADO";*/
     }
 
     private function parseStatusState($msg)
     {
-        if ($msg == "ready_to_ship")
+        return "process";
+        /*if ($msg == "ready_to_ship")
         {
             return "process";
         }
-        return "success";
+        return "success";*/
     }
 
     public static function getShipmentString($products)
