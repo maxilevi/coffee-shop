@@ -12,7 +12,7 @@ final class MercadoHandler
     const CLIENT_ID = "4757717842404032";
     const CLIENT_SECRET = "2Y4pmHzCwJPoS9tTpXjLYIFnUtFYb8i7";
     const ACCESS_TOKEN = "APP_USR-4757717842404032-031710-9406a351eb88dc4a26a777de58eeb715-203380971";
-    const IS_SANDBOX = true;
+    const IS_SANDBOX = false;
 
     public static function authClient()
     {
