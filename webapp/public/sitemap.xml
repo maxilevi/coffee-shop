@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -10,98 +9,128 @@
 
 <url>
   <loc>https://outletdecafe.com/</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/?brand=Bonafide</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/?brand=Caf%C3%A9+Martinez</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://outletdecafe.com/cart/</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <loc>https://outletdecafe.com/?brand=Juan+Valdez</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://outletdecafe.com/shipment</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://outletdecafe.com/contact</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/1</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/2</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/3</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/4</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/5</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/6</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/7</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/8</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/9</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/10</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/11</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/12</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/13</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://outletdecafe.com/product/14</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://outletdecafe.com/checkout/</loc>
-  <lastmod>2019-03-21T18:01:21+00:00</lastmod>
-  <priority>0.64</priority>
+  <loc>https://outletdecafe.com/product/15</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://outletdecafe.com/product/16</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://outletdecafe.com/product/17</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://outletdecafe.com/contact/</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://outletdecafe.com/tyc/</loc>
+  <lastmod>2019-03-25T01:57:57+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 
 
