@@ -13,7 +13,7 @@ def scrape(save_path, soup):
     formatter = image_formatter.ImageFormatter()
     data['name'] = parse_name(soup.find('div', class_='breadcrumb clearfix').text)
     data['description'] = soup.find('div', {"id": 'short_description_content'}).find('p').text
-    data['price'] = parse_price(soup.find('span', {"id": "unit_price_display"}).text)
+    data['price'] = parse_price(soup.find('span', {"id": "unit_price_display"}).text) + 50
     data['cuts'] = [i.text for i in soup.find('select', attrs = {'name': 'group_4'}).findAll('option')]
     thumbnail_url = soup.find('div', {"id": "image-block"}).find('img')['src']
     data['thumbnail'] = '/temp/' + formatter.format(thumbnail_url, save_path)
